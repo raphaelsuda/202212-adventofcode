@@ -39,8 +39,6 @@ function move_crate!(from, to, stacks; n=1)
     return stacks
 end
 
-    
-
 ## PART 1
 stacks = get_stacks(crate_input)
 for i in instructions
