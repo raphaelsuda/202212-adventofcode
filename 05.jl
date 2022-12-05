@@ -9,32 +9,27 @@ end
 
 function get_stack(input, pos)
     i = 2 + (pos-1) * 4
-    stack = Dict{Int, Char}()
-    counter = 1
+    stack = Char[]
     for l in input
-        if l[i] == ' '
-            continue
+        if l[i] != ' '
+            push!(stack, l[i])
         end
-        stack[counter] = l[i]
-        counter += 1
     end
     return stack
 end
 
 function get_stacks(input)
     n = (length(input[1]) + 1) ÷ 4
-    return Dict(i => get_stack(input, i) for i in 1:n)
+    return [get_stack(input, i) for i in 1:n]
 end
 
 function move_crate!(from, to, stacks; n=1)
-    for i in length(stacks[to]):-1:1
-        stacks[to][i+n] = stacks[to][i]
-    end
+    moved_crates = Char[]
     for i in 1:n
-        stacks[to][i] = stacks[from][i]
+        insert!(moved_crates, 1, popfirst!(stacks[from]))
     end
-    for i in n+1:length(stacks[from])
-        stacks[from][i-n] = stacks[from][i]
+    for c in moved_crates
+        insert!(stacks[to], 1, c)
     end
     return stacks
 end
@@ -46,19 +41,11 @@ for i in instructions
         move_crate!(i.from, i.to, stacks)
     end
 end
-message = ""
-for i in 1:length(stacks)
-    message *= stacks[i][1]
-end
-message
+join([stacks[i][1] for i in eachindex(stacks)])
 
 ## PART 2
 stacks = get_stacks(crate_input)
 for i in instructions
     move_crate!(i.from, i.to, stacks; n=i.n)
 end
-message = ""
-for i in 1:length(stacks)
-    message *= stacks[i][1]
-end
-message
+join([stacks[i][1] for i in eachindex(stacks)])
