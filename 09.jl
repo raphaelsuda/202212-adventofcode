@@ -2,7 +2,7 @@ function move_knot(primary_knot, secondary_knot, primary_step)
     primary_knot = primary_knot .+ primary_step
     difference = primary_knot .- secondary_knot
     if maximum(abs.(difference)) == 2
-        secondary_step = Int.(difference ./ max.(abs.(difference), 1))
+        secondary_step = sign.(difference)
         secondary_knot = secondary_knot .+ secondary_step
     else
         secondary_step = (0,0)
