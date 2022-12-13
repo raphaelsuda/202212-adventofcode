@@ -46,7 +46,6 @@ function part_1(monkeys; rounds=20)
         juggle!(monkeys; part=1)
     end
     interactions = map(monkey -> monkey.n_inspected, values(monkeys))
-    @show interactions
     return prod(sort(interactions)[end-1:end])
 end
 
@@ -59,7 +58,6 @@ function part_2(monkeys; rounds=20)
         juggle!(monkeys; part=2)
     end
     interactions = map(monkey -> monkey.n_inspected, values(monkeys))
-    @show interactions
     return prod(sort(interactions)[end-1:end])
 end
 
